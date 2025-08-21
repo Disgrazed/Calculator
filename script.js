@@ -11,7 +11,11 @@ function multiply(x, y) {
 }
 
 function divide(x, y) {
-    return x / y;
+
+    if (y == 0) {
+        return "Error";
+    }
+    else { return x / y; }
 }
 
 console.log(multiply("\n \n \n 4", .7));
@@ -26,6 +30,7 @@ let flag = false;
 let flagOp = false;
 let flagDec = false;
 let flagEq = false;
+let flagZero = false;
 let limbo;
 
 
@@ -70,13 +75,13 @@ showKeyNum.forEach((item) => {
                     flagOp = false;
                 }
 
-                
+
                 display.textContent = `${display.textContent}${item.textContent}`
                 limbo = display.textContent;
                 ;
             }
 
-            else{
+            else {
                 alert("Can't use more than 1 decimals")
                 flagDec = true;
             }
@@ -90,25 +95,25 @@ showKeyNum.forEach((item) => {
                 allClear.click();
             }
             if (flag == true) {
-                
+
                 display.textContent = null;
                 flag = false;
             }
 
             if (flagOp == true) {
-                
+
                 display.textContent = null;
                 flagOp = false;
             }
 
-            if (operator == "/" && item.textContent == "0" && display.textContent == "") {
+            // if (operator == "/" && item.textContent == "0" && display.textContent == "") {
 
-                alert("Can't divide with zero")
-            }
-            else {
-                display.textContent = `${display.textContent}${item.textContent}`
-                limbo = display.textContent;
-            };
+            //     alert("Can't divide with zero")
+            // }
+
+            display.textContent = `${display.textContent}${item.textContent}`
+            limbo = display.textContent;
+
 
 
         })
@@ -120,7 +125,7 @@ showKeyNum.forEach((item) => {
 
 showKeyOp.forEach((item) => {
     item.addEventListener("click", () => {
-        
+
         // if (flag == true) {
         //     display.textContent = null;
         //     flag = false;
@@ -158,15 +163,30 @@ showKeyOp.forEach((item) => {
 
             arr.length = 0;
 
+            if (result == "Error") {
+                alert("Can't divide by zero. Bye.");
+                allClear.click();
+                flagZero = true;
+            }
+            else {
+                arr.push(result);
+                display.textContent = result.toFixed(2);
+                flag = true;
 
-            arr.push(result);
-            display.textContent = result.toFixed(2);
-            flag = true;
+            }
+
+            
 
         }
 
-        operator = item.textContent;
-        arr[1] = operator;
+        if (flagZero == false)
+            {operator = item.textContent;
+            arr[1] = operator;}
+            else{
+                flagZero = false;
+            }
+
+
 
     })
 })
@@ -182,13 +202,13 @@ equals.addEventListener("click", () => {
 
     // display.textContent = null;
 
-    
-    if (!(limbo === "")) { arr.push(limbo); limbo = ""; flagDec = true;};
+
+    if (!(limbo === "")) { arr.push(limbo); limbo = ""; flagDec = true; };
 
     if (arr.length == 3) {
         flagEq = true;
         arr = arr.map((item) => {
-            
+
             if (item == "+" || item == "-" || item == "/" || item == "*") { return item }
             else { return Number(item) };
         })
@@ -211,17 +231,26 @@ equals.addEventListener("click", () => {
         arr.length = 0;
 
 
-        arr.push(result);
-        display.textContent = result.toFixed(2);
-        flag = true;
+        if (result == "Error") {
+                alert("Can't divide by zero. Bye.");
+                allClear.click();
+                // flagZero = true;
+            }
+            else {
+                arr.push(result);
+                display.textContent = result.toFixed(2);
+                flag = true;
+
+                
+            }
 
     }
 
     else {
 
         alert("Invalid Action");
-        allClear.click();
         
+
     }
 })
 
