@@ -16,10 +16,6 @@ function divide(x,y) {
 
 console.log(multiply("\n \n \n 4", .7));
 
-let var1;
-let operator;
-let var2;
-
 let arr = [];
 
 
@@ -53,8 +49,12 @@ showKeyNum.forEach((item) => {
 showKeyOp.forEach((item) => {
    item.addEventListener("click" ,() => {
 
-    
-        arr.push(display.textContent);
+        if(!(isNaN(Number(display.textContent)))) {
+            console.log("ram")
+            arr.push(display.textContent);
+        }
+
+
         if (arr.length == 3) {
 
             arr = arr.map((item) => {
@@ -78,8 +78,12 @@ showKeyOp.forEach((item) => {
             }
 
             arr.length = 0;
+            console.log(result);
             arr.push(result);
+
         }
+
+
         display.textContent = item.textContent;
         
    }) 
