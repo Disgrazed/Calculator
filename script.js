@@ -92,7 +92,7 @@ showKeyOp.forEach((item) => {
 
 
             arr.push(result);
-            display.textContent = result;
+            display.textContent = result.toFixed(2);
             flag = true;
 
         }
