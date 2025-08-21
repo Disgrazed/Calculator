@@ -24,6 +24,8 @@ let operator;
 
 let flag = false;
 let flagOp = false;
+let flagDec = false;
+let flagEq = false;
 let limbo;
 
 
@@ -39,33 +41,78 @@ const display = document.querySelector("#display")
 const allClear = document.querySelector("#allClear");
 
 allClear.addEventListener("click", () => {
+    flag = false;
+    flagOp = false;
+    flagDec = false;
+    flagEq = false;
     display.textContent = null;
     arr.length = 0;
+    console.log("ram");
 })
 
 showKeyNum.forEach((item) => {
 
+    if (item.textContent == ".") {
+        item.addEventListener("click", () => {
+            if (flagEq == true) {
+                allClear.click();
+            }
 
-    item.addEventListener("click", () => {
-        if (flag == true) {
-            display.textContent = null;
-            flag = false;
-        }
+            flagDec = !(flagDec);
+            if (flagDec == true) {
+                if (flag == true) {
+                    display.textContent = null;
+                    flag = false;
+                }
 
-        if (flagOp == true) {
-            display.textContent = null;
-            flagOp = false;
-        }
+                if (flagOp == true) {
+                    display.textContent = null;
+                    flagOp = false;
+                }
 
-        if (operator == "/" && item.textContent == "0" && display.textContent == "") {
-            alert("Can't divide with zero")
-        }
-        else { display.textContent = `${display.textContent}${item.textContent}` 
+                
+                display.textContent = `${display.textContent}${item.textContent}`
                 limbo = display.textContent;
-        };
+                ;
+            }
+
+            else{
+                alert("Can't use more than 1 decimals")
+                flagDec = true;
+            }
+        }
+        )
+    }
+
+    else {
+        item.addEventListener("click", () => {
+            if (flagEq == true) {
+                allClear.click();
+            }
+            if (flag == true) {
+                
+                display.textContent = null;
+                flag = false;
+            }
+
+            if (flagOp == true) {
+                
+                display.textContent = null;
+                flagOp = false;
+            }
+
+            if (operator == "/" && item.textContent == "0" && display.textContent == "") {
+
+                alert("Can't divide with zero")
+            }
+            else {
+                display.textContent = `${display.textContent}${item.textContent}`
+                limbo = display.textContent;
+            };
 
 
-    })
+        })
+    }
 
 
 })
@@ -73,14 +120,18 @@ showKeyNum.forEach((item) => {
 
 showKeyOp.forEach((item) => {
     item.addEventListener("click", () => {
-        flagOp = true;
+        
         // if (flag == true) {
         //     display.textContent = null;
         //     flag = false;
         // }
-
+        flagOp = true;
+        flagDec = false;
         if (!(limbo === "")) { arr.push(limbo); limbo = ""; };
 
+        if (flagEq == true) {
+            flagEq = false;
+        }
         // display.textContent = null;
 
 
@@ -122,17 +173,22 @@ showKeyOp.forEach((item) => {
 
 
 equals.addEventListener("click", () => {
-    if (flag == true) {
-        display.textContent = null;
-        flag = false;
-    }
+    // if (flag == true) {
+    //     display.textContent = null;
+    //     flag = false;
+    // }
 
-    if (!(display.textContent === "")) { arr.push(display.textContent) };
+    // if (!(display.textContent === "")) { arr.push(display.textContent) };
 
-    display.textContent = null;
+    // display.textContent = null;
+
+    
+    if (!(limbo === "")) { arr.push(limbo); limbo = ""; flagDec = true;};
 
     if (arr.length == 3) {
+        flagEq = true;
         arr = arr.map((item) => {
+            
             if (item == "+" || item == "-" || item == "/" || item == "*") { return item }
             else { return Number(item) };
         })
@@ -162,7 +218,10 @@ equals.addEventListener("click", () => {
     }
 
     else {
+
         alert("Invalid Action");
+        allClear.click();
+        
     }
 })
 
