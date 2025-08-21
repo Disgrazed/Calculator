@@ -18,7 +18,7 @@ console.log(multiply("\n \n \n 4", .7));
 
 let arr = [];
 
-
+let operator;
 
 
 
@@ -33,30 +33,31 @@ const allClear = document.querySelector("#allClear");
 
 allClear.addEventListener("click", ()=> {
     display.textContent = null;
+    arr.length = 0;
 })
 
 showKeyNum.forEach((item) => {
    item.addEventListener("click" ,() => {
 
-        if (display.textContent == "+" ||display.textContent == "-" ||display.textContent == "/"||display.textContent == "*"){
-            arr.push(display.textContent);
-            
-            display.textContent = null;
-    }
+
         display.textContent = `${display.textContent}${item.textContent}`;
+
+        
         }) 
 })
+
+
 showKeyOp.forEach((item) => {
    item.addEventListener("click" ,() => {
+        
+         
+        if (!(display.textContent === ""))
+            {arr.push(display.textContent)};
 
-        if(!(isNaN(Number(display.textContent)))) {
-            console.log("ram")
-            arr.push(display.textContent);
-        }
-
+        display.textContent = null;
+        
 
         if (arr.length == 3) {
-
             arr = arr.map((item) => {
             if (item == "+" ||item == "-" ||item == "/"||item == "*") {return item}
             else {return Number(item)};
@@ -79,12 +80,13 @@ showKeyOp.forEach((item) => {
 
             arr.length = 0;
             console.log(result);
+            
             arr.push(result);
 
         }
 
 
-        display.textContent = item.textContent;
+        arr[1] = item.textContent;
         
    }) 
 })
