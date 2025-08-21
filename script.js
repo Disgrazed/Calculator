@@ -23,6 +23,8 @@ let operator;
 
 
 let flag = false;
+let flagOp = false;
+let limbo;
 
 
 
@@ -50,10 +52,17 @@ showKeyNum.forEach((item) => {
             flag = false;
         }
 
+        if (flagOp == true) {
+            display.textContent = null;
+            flagOp = false;
+        }
+
         if (operator == "/" && item.textContent == "0" && display.textContent == "") {
             alert("Can't divide with zero")
         }
-        else { display.textContent = `${display.textContent}${item.textContent}` };
+        else { display.textContent = `${display.textContent}${item.textContent}` 
+                limbo = display.textContent;
+        };
 
 
     })
@@ -64,15 +73,15 @@ showKeyNum.forEach((item) => {
 
 showKeyOp.forEach((item) => {
     item.addEventListener("click", () => {
+        flagOp = true;
+        // if (flag == true) {
+        //     display.textContent = null;
+        //     flag = false;
+        // }
 
-        if (flag == true) {
-            display.textContent = null;
-            flag = false;
-        }
+        if (!(limbo === "")) { arr.push(limbo); limbo = ""; };
 
-        if (!(display.textContent === "")) { arr.push(display.textContent) };
-
-        display.textContent = null;
+        // display.textContent = null;
 
 
         if (arr.length == 3) {
